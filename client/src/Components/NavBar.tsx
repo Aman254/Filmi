@@ -3,7 +3,7 @@ import { FaHome, FaSignInAlt, FaList } from "react-icons/fa";
 
 export default function NavBar() {
   return (
-    <nav className="bg-violet-600 text p-4 ">
+    <nav className="bg-violet-600 text p-6 px-6 ">
       <div className="container flex justify-between items-center">
         <div className="text-white text-2xl font-bold transition-transform duration-300 hover:scale-105">
           FILMI

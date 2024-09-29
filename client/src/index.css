@@ -162,3 +162,25 @@ body {
   }
 }
 /****************************************************** */
+
+.cardMovieDetails {
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(35, 36, 133, 0.22);
+  border-radius: 17px;
+  /* text-align: center; */
+  cursor: pointer;
+  transition: all 0.5s;
+  user-select: none;
+  font-weight: bolder;
+}
+
+.cardMovieDetails:hover {
+  border: 1px solid rgb(39, 64, 179);
+  transform: scale(1.05);
+}
+
+.cardMovieDetails:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}

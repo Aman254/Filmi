@@ -4,6 +4,8 @@ import { Search } from "../Components/Search"; /**Search Component */
 import { Loader } from "../Components/Loader"; /**Loader Component */
 import { ErrorMessage } from "../Components/Error"; /**Error Message Component */
 import { MovieList } from "../PageComponents/MovieList"; /** MovieList Component for displaying Movies */
+import { Footer } from "../Components/Footer";
+import MovieDetailsCard from "../Components/MovieDetailsCard";
 
 /**Defining Interface for the Data and its types. */
 interface Movie {
@@ -15,14 +17,14 @@ interface Movie {
 
 export const Home: React.FC = () => {
   /**Key for the Movie Api */
-  const key: number = 55429466;
-  /**Defining an Empty Movie array with useState */
+  const key: string = "55429466";
+
   const [movies, setMovies] = useState<Movie[]>([]);
-  /** Query with default Avengers for the Api*/
+
   const [query, setQuery] = useState<string>("Avengers");
-  /**The Loading state, a boolean, Initially false */
+
   const [isLoading, setIsloading] = useState<boolean>(false);
-  /**The error state for setting Errors. */
+
   const [error, setError] = useState("");
 
   /**useEffect Hook to fect movies on Search or if Query changes. */
@@ -43,13 +45,10 @@ export const Home: React.FC = () => {
           { signal: controller.signal }
         );
 
-        /**If there is an Error or response is not ok throw an Error. */
         if (!res.ok) throw new Error("Error in fetching movies.");
 
-        /**Converting the res to the json form and storing in the data.*/
         const data = await res.json();
 
-        /**If there is no Data/Movie requested. */
         if (data.Response === "False") throw new Error("Movie not found.");
 
         /**If everything is Ok set the Data and Error to empty. */
@@ -86,17 +85,22 @@ export const Home: React.FC = () => {
   }, [query]);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <NavBar />
-      {/* Passing the Query as props for Search component */}
-      <Search query={query} setQuery={setQuery} />
-      <div className="p-2 m-2 mx-6 my-6 px-4">
-        {/**If isLoading is true */}
-        {isLoading && <Loader />}
-        {/**If there is an Error render the ErrorMessage */}
-        {error && <ErrorMessage message={error} />}
-        {!isLoading && !error && <MovieList movies={movies} />}
+      <MovieDetailsCard />
+
+      {/* Content will take remaining space pushing footer to the bottom */}
+      <div className="flex-grow">
+        {/* Passing the Query as props for Search component */}
+        <Search query={query} setQuery={setQuery} />
+        <div className="p-2 m-2 mx-6 my-6 px-4">
+          {isLoading && <Loader />}
+          {error && <ErrorMessage message={error} />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+        </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
