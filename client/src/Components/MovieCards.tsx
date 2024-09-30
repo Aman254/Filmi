@@ -11,9 +11,13 @@ interface Movie {
 
 interface MovieProps {
   movie: Movie;
+  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export const MovieCards: React.FC<MovieProps> = ({ movie }) => {
+export const MovieCards: React.FC<MovieProps> = ({ movie, setSelectedId }) => {
+  function handleDetailsClcik() {
+    setSelectedId(movie.imdbID);
+  }
   return (
     <div className="card font-poppins">
       <img
@@ -27,7 +31,7 @@ export const MovieCards: React.FC<MovieProps> = ({ movie }) => {
           <FaCalendarAlt className="inline-block text-blue-500" />
           <span className="ml-1 text-sm">Year: {movie.Year}</span>
 
-          <Button title="Details" />
+          <Button title="Details" onClick={handleDetailsClcik} />
         </div>
       </div>
     </div>

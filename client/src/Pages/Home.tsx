@@ -15,9 +15,20 @@ interface Movie {
   imdbID: string;
 }
 
+interface WatchedMovie {
+  imdbID: string;
+  title: string;
+  poster: string;
+  imdbRating: number;
+  runtime: number;
+  userRating: string;
+}
+
 export const Home: React.FC = () => {
   /**Key for the Movie Api */
   const key: string = "55429466";
+
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const [movies, setMovies] = useState<Movie[]>([]);
 
@@ -26,6 +37,16 @@ export const Home: React.FC = () => {
   const [isLoading, setIsloading] = useState<boolean>(false);
 
   const [error, setError] = useState("");
+
+  const [watched, setWatched] = useState<WatchedMovie[]>([]);
+
+  function handleAddWatched(movie: WatchedMovie) {
+    setWatched((watched) => [...watched, movie]);
+  }
+
+  function handleDeleteWatched(id: string) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  }
 
   /**useEffect Hook to fect movies on Search or if Query changes. */
   useEffect(() => {
@@ -68,6 +89,7 @@ export const Home: React.FC = () => {
       } finally {
         /**resetting the Loading to false, Again */
         setIsloading(false);
+        setError("");
       }
     }
 
@@ -87,17 +109,30 @@ export const Home: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
-      <MovieDetailsCard />
 
       {/* Content will take remaining space pushing footer to the bottom */}
       <div className="flex-grow">
         {/* Passing the Query as props for Search component */}
         <Search query={query} setQuery={setQuery} />
-        <div className="p-2 m-2 mx-6 my-6 px-4">
-          {isLoading && <Loader />}
-          {error && <ErrorMessage message={error} />}
-          {!isLoading && !error && <MovieList movies={movies} />}
-        </div>
+
+        {selectedId ? (
+          <MovieDetailsCard
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+            onAddWatched={handleAddWatched}
+            watched={watched}
+
+            // onDeleteWatched={handleDeleteWatched}
+          />
+        ) : (
+          <div className="p-2 m-2 mx-6 my-6 px-4">
+            {isLoading && <Loader />}
+            {error && <ErrorMessage message={error} />}
+            {!isLoading && !error && (
+              <MovieList movies={movies} setSelectedId={setSelectedId} />
+            )}
+          </div>
+        )}
       </div>
 
       <Footer />
