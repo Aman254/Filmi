@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "../Components/NavBar"; /**NavBar component */
+import { NavBar } from "../Components/NavBar"; /**NavBar component */
 import { Search } from "../Components/Search"; /**Search Component */
 import { Loader } from "../Components/Loader"; /**Loader Component */
 import { ErrorMessage } from "../Components/Error"; /**Error Message Component */
 import { MovieList } from "../PageComponents/MovieList"; /** MovieList Component for displaying Movies */
 import { Footer } from "../Components/Footer";
 import MovieDetailsCard from "../Components/MovieDetailsCard";
+import { MyList } from "./MyList";
 
 /**Defining Interface for the Data and its types. */
 interface Movie {
@@ -39,6 +40,8 @@ export const Home: React.FC = () => {
   const [error, setError] = useState("");
 
   const [watched, setWatched] = useState<WatchedMovie[]>([]);
+
+  const [showMovieList, setShowMovieList] = useState(false);
 
   function handleAddWatched(movie: WatchedMovie) {
     setWatched((watched) => [...watched, movie]);
@@ -108,7 +111,7 @@ export const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <NavBar />
+      <NavBar setShowMovieList={setShowMovieList} />
 
       {/* Content will take remaining space pushing footer to the bottom */}
       <div className="flex-grow">
@@ -128,8 +131,11 @@ export const Home: React.FC = () => {
           <div className="p-2 m-2 mx-6 my-6 px-4">
             {isLoading && <Loader />}
             {error && <ErrorMessage message={error} />}
-            {!isLoading && !error && (
+            {!isLoading && !error && !showMovieList && (
               <MovieList movies={movies} setSelectedId={setSelectedId} />
+            )}
+            {showMovieList && (
+              <MyList watched={watched} onDeleteWatched={handleDeleteWatched} />
             )}
           </div>
         )}

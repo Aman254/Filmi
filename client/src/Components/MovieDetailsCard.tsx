@@ -58,7 +58,6 @@ const MovieDetailsCard: React.FC<MovieDetailsCardProps> = ({
   const [userRating, setUserRating] = useState("");
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
-
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId
   )?.userRating;
@@ -80,13 +79,19 @@ const MovieDetailsCard: React.FC<MovieDetailsCardProps> = ({
     Genre: genre,
   } = movie;
 
+  // Function to extract numeric value from runtime string
+  const parseRuntime = (runtime: string) => {
+    const runtimeNumber = parseInt(runtime, 10); // Extracts the numeric part
+    return isNaN(runtimeNumber) ? 0 : runtimeNumber; // Returns 0 if invalid
+  };
+
   function handleAdd() {
     const newWatchedMovie: WatchedMovie = {
       imdbID: selectedId,
       title,
       poster,
       imdbRating: Number(imdbRating) || 0, // Handle potential NaN
-      runtime: Number(runtime) || 0, // Handle potential NaN
+      runtime: parseRuntime(runtime), // Use parsed runtime
       userRating,
     };
     onAddWatched(newWatchedMovie);
@@ -144,7 +149,8 @@ const MovieDetailsCard: React.FC<MovieDetailsCardProps> = ({
               </h1>
 
               <p className="text-gray-600 mb-4 flex items-center gap-2">
-                <FaCalendarAlt className="text-pink-400" /> {runtime} | {genre}
+                <FaCalendarAlt className="text-pink-400" />{" "}
+                {parseRuntime(runtime)} min | {genre}
               </p>
 
               {/* IMDb Rating */}

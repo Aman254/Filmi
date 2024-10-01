@@ -6,10 +6,6 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/mylist" element={<Home />} />
-
-        <Route path="/login" element={<Home />} />
-        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   );
