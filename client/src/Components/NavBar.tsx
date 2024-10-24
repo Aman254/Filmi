@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaHome, FaSignInAlt, FaList } from "react-icons/fa";
 import React from "react";
+import Avatar from "./Avatar";
 
 interface NavBarProps {
   setShowMovieList: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,12 +24,18 @@ export const NavBar: React.FC<NavBarProps> = ({ setShowMovieList }) => {
             Home
           </Link>
 
-          <Link
+          {/* <Link
             to="/login"
             className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-110"
           >
             <FaSignInAlt className="mr-2 transition-transform duration-300 hover:rotate-12" />
             Login
+          </Link> */}
+          <Link
+            to="/profile"
+            className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-110"
+          >
+            <Avatar />
           </Link>
           <Link
             to="/"
