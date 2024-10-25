@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import { FaHome, FaSignInAlt, FaList } from "react-icons/fa";
-import React from "react";
+import React, { useContext } from "react";
 import Avatar from "./Avatar";
+import UserContext from "../context/UserContext";
 
 interface NavBarProps {
   setShowMovieList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const NavBar: React.FC<NavBarProps> = ({ setShowMovieList }) => {
+  const { user } = useContext(UserContext);
+
   return (
     <nav className="bg-violet-600 text p-6 px-6 ">
       <div className="container flex justify-between items-center">
@@ -24,19 +27,24 @@ export const NavBar: React.FC<NavBarProps> = ({ setShowMovieList }) => {
             Home
           </Link>
 
-          {/* <Link
-            to="/login"
-            className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-110"
-          >
-            <FaSignInAlt className="mr-2 transition-transform duration-300 hover:rotate-12" />
-            Login
-          </Link> */}
-          <Link
-            to="/profile"
-            className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-110"
-          >
-            <Avatar />
-          </Link>
+          <>
+            {user && user.email ? (
+              <Link
+                to="/profile"
+                className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-110"
+              >
+                <Avatar />
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-110"
+              >
+                <FaSignInAlt className="mr-2 transition-transform duration-300 hover:rotate-12" />
+                Login
+              </Link>
+            )}
+          </>
           <Link
             to="/"
             className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-110"

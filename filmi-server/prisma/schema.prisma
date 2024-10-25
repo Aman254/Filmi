@@ -15,8 +15,8 @@ datasource db {
 
 model User{
 
- id String @id @default(uuid())
- email String
+ id Int @id @default(autoincrement())
+ email String @unique
  name String
  password String
  movies Movies[]
@@ -24,12 +24,13 @@ model User{
 
 
 model Movies{
-id String @id @default(uuid())
+id Int @id @default(autoincrement())
+authorId Int
 title String
 poster String
 runtime String
 imdbRating String
 userRating Float
 author User @relation(fields:[authorId], references: [id])
-authorId String
+
 }

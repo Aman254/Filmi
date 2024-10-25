@@ -1,4 +1,4 @@
-name = "%%PROJECT_NAME%%"
+name = "filmi-server"
 main = "src/index.ts"
 compatibility_date = "2024-04-01"
 compatibility_flags = [ "nodejs_compat" ]
@@ -6,22 +6,4 @@ compatibility_flags = [ "nodejs_compat" ]
 [vars]
 DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiODA4YTFiN2ItZTk4MC00NTUzLWE3MWYtMWRhMjJlOGY0MGE2IiwidGVuYW50X2lkIjoiNTM5ODlhYjYxMjVhMjM1MTZhNDM4ZjMyZjBlMzVmN2ZmMzU0MDBiM2EyYWU1YjIyMmUwMzUxNWNhNzJiM2QyMCIsImludGVybmFsX3NlY3JldCI6Ijc1NWVmMTk3LWUxNjctNDk1OC1iMTFlLTEzOTExNjg3NGYzNSJ9.quBBorhPcAhc2Sv20YRlEblZqfqxygVjaf-l0cVNF0E"
 
-# [[kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-
-# [[r2_buckets]]
-# binding = "MY_BUCKET"
-# bucket_name = "my-bucket"
-
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
-
-# [ai]
-# binding = "AI"
-
-# [observability]
-# enabled = true
-# head_sampling_rate = 1
+JWT_SECRET = "y*CGF/RYX6{#"
